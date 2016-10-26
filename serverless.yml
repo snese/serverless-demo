@@ -15,8 +15,13 @@ service: demo-service
 provider:
   name: aws
   runtime: nodejs4.3
-  stage: dev
-  profile: devProfile
+  stage: ${opt:stage, self:custom.defaultStage}
+  profile: ${self:custom.profiles.${self:provider.stage}}
+custom:
+  defaultStage: dev
+  profiles:
+    dev: devProfile
+    prod: prodProfile
 
 # you can overwrite defaults here
 #  stage: dev
