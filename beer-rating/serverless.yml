@@ -16,6 +16,12 @@ service: beer-rating
 provider:
   name: aws
   runtime: nodejs4.3
+  # Lambda function's IAM Role Statements
+  iamRoleStatements:
+    - Effect: "Allow"
+      Action:
+        - "dynamodb:*"
+      Resource: "arn:aws:dynamodb:*:*:table/slsbeer"
 
 # you can overwrite defaults here
 #  stage: dev
@@ -49,6 +55,12 @@ functions:
       - http:
           path: beer/hello
           method: get
+  addRating:
+    handler: handler.addRating
+    events:
+      - http:
+          path: beer/rating
+          method: post
 
 #    The following are a few example events you can configure
 #    NOTE: Please make sure to change your handler code to work with those events
@@ -73,3 +85,20 @@ functions:
 #     NewOutput:
 #       Description: "Description for the output"
 #       Value: "Some output value"
+resources:
+  Resources:
+    BeerDynamo:
+      Type: 'AWS::DynamoDB::Table'
+      Properties:
+        AttributeDefinitions:
+          -
+            AttributeName: id
+            AttributeType: S
+        KeySchema:
+          -
+            AttributeName: id
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+        TableName: slsbeer
