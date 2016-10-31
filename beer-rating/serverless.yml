@@ -16,6 +16,12 @@ service: beer-rating
 provider:
   name: aws
   runtime: nodejs4.3
+  # Lambda function's IAM Role Statements
+  iamRoleStatements:
+    - Effect: "Allow"
+      Action:
+        - "dynamodb:*"
+      Resource: "arn:aws:dynamodb:*:*:table/slsbeer"
 
 # you can overwrite defaults here
 #  stage: dev
