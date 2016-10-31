@@ -59,7 +59,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/beer-rating/dev/1477885332620-2016-10-31T03:42:12.620Z/beer-rating.zip"
+          "S3Key": "serverless/beer-rating/dev/1477893966561-2016-10-31T06:06:06.561Z/beer-rating.zip"
         },
         "FunctionName": "beer-rating-dev-hello",
         "Handler": "handler.hello",
@@ -252,7 +252,7 @@
         }
       }
     },
-    "ApiGatewayDeployment1477885332663": {
+    "ApiGatewayDeployment1477893966574": {
       "Type": "AWS::ApiGateway::Deployment",
       "Properties": {
         "RestApiId": {
