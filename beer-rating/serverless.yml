@@ -61,6 +61,12 @@ functions:
       - http:
           path: beer/rating
           method: post
+  getRating:
+    handler: handler.getRating
+    events:
+      - http:
+          path: beer/rating
+          method: get
 
 #    The following are a few example events you can configure
 #    NOTE: Please make sure to change your handler code to work with those events
