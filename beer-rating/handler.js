@@ -40,3 +40,34 @@ module.exports.addRating = (event, context, callback) => {
     });
   });
 }
+
+module.exports.getRating = (event, context, callback) => {
+  var docClient = new AWS.DynamoDB.DocumentClient();
+
+  var params = {
+    TableName: 'slsbeer',
+    FilterExpression : 'beer = :beer_name',
+    ExpressionAttributeValues : {':beer_name' : event.queryStringParameters.beer}
+  }
+
+  docClient.scan(params, (error, data) => {
+    if (error) {
+      callback(error);
+    }
+
+    var sum = data.Items.reduce((accumulated, current) => {
+      return accumulated + current.rating}
+    , 0);
+
+    var average = sum/data.Items.length;
+
+    callback(null, {
+      statusCode: 200,
+      headers: {
+        'Access-Control-Allow-Origin': '*'
+      },
+      body: JSON.stringify({ averageRating: average }),
+    })
+
+  });
+}
